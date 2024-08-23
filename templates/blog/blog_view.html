@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/static/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+  <script src="/static/marked-13.0.2/marked.min.js"></script>
+  <script src="/static/highlight/highlight.min.js"></script>
+  <script src="/static/highlight/languages/cpp.min.js"></script>
+  <link rel="stylesheet" href="/static/highlight/styles/arduino-light.css">
+  <link rel="stylesheet" href="/static/katex-0.16.11/katex.min.css">
+  <script src="/static/katex-0.16.11/katex.min.js"></script>
+  <script src="/static/katex-0.16.11/contrib/auto-render.min.js"></script>
+  <style>
+    .blog-content {
+      padding: 20px 50px;
+    }
+    .hljs {
+      background-color: #F0FAFF;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+{% include "blog/blog_navbar.html" %}
+
+<textarea id="blog-markdown" style="display: none;">{{ content }}</textarea>
+<div class="blog-content">
+  <div id="blog-content"></div>
+  <p style="color: #BBB;">创建时间：{{ create_time }} 修改时间：{{ update_time }}</p>
+</div>
+<script src="/static/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  var katex_config = {
+	  delimiters: [
+	    {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      { left: '\\{', right: '\\}', display: true },
+      { left: '\\begin{equation}', right: '\\end{equation}', display: true },
+      { left: '\\begin{align}', right: '\\end{align}', display: true },
+      { left: '\\begin{alignat}', right: '\\end{alignat}', display: true },
+      { left: '\\begin{gather}', right: '\\end{gather}', display: true },
+      { left: '\\begin{CD}', right: '\\end{CD}', display: true },
+	  ]
+  };
+  document.getElementById('blog-content').innerHTML = marked.parse(document.getElementById('blog-markdown').value);
+  hljs.highlightAll();
+  renderMathInElement(document.getElementById('blog-content'), katex_config);
+</script>
+</body>
+</html>
