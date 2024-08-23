@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-KevinLikesCoding-KLCOI-site-password'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['cn-hk-1.govfrp.com', '127.0.0.1', '10.89.71.80']
+ALLOWED_HOSTS = ['*']
 
 # ALLOWED_HOSTS = ['127.0.0.1']
 
