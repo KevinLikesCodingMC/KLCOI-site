@@ -14,7 +14,7 @@ jobs:
           mkdir ~/.ssh/
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/private.key
           sudo chmod 600 ~/private.key
-          ssh-keyscan -t rsa -H i${{ secrets.SSH_SERVER }} > ~/.ssh/known_hosts
+          ssh-keyscan -t rsa -H ${{ secrets.SSH_SERVER }} > ~/.ssh/known_hosts
       - name: 'Pull'
         run: ssh -i ~/private.key ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} "cd ${{ secrets.REPO_PATH }} && git pull origin main"
       - name: 'Restart server'
