@@ -1,0 +1,21 @@
+name: 'Deploy to server'
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4'
+      - name: 'Create SSH key'
+        run: |
+          mkdir ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/private.key
+          sudo chmod 600 ~/private.key
+          ssh-keyscan -t rsa -H i${{ secrets.SSH_SERVER }} > ~/.ssh/known_hosts
+      - name: 'Pull'
+        run: ssh -i ~/private.key ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} "cd ${{ secrets.REPO_PATH }} && git pull origin main"
+      - name: 'Restart server'
+        run: ssh -i ~/private.key ${{ secrets.SSH_USER }}@${{ secrets.SSH_SERVER }} "sudo systemctl restart klc && systemctl status klc"
